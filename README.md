@@ -30,6 +30,8 @@ The tool performs a crawl-based SEO/GEO audit without paid APIs.
 - BrowserPath (optional): Explicit browser executable path for rendered checks
 - RenderedSampleSize (default: 20): Number of crawled pages to compare rendered vs raw
 - AsJson (switch): Output full report as JSON
+- AsHtml (switch): Output visual HTML report
+- HtmlReportPath (optional): Path for HTML report output
 
 ## Basic usage
 
@@ -44,6 +46,30 @@ JSON output:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\seo-geo-audit.ps1 -StartUrl https://example.com/ -MaxPages 200 -MaxDepth 3 -AsJson
 ```
+
+HTML report output:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\seo-geo-audit.ps1 -StartUrl https://example.com/ -AsHtml
+```
+
+HTML report with explicit path:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\seo-geo-audit.ps1 -StartUrl https://example.com/ -AsHtml -HtmlReportPath .\reports\seo-report.html
+```
+
+## HTML report contents
+
+The generated HTML report includes:
+
+- Visual score and summary counters
+- Quality checks table (pass/fail)
+- Prioritized action plan with remediation steps
+- Command-style header theme for SEO/GEO report output
+- Top quick links for:
+   - https://learn.cloudpartner.fi
+   - https://intro.cloudpartner.fi
 
 Rendered-vs-raw checks:
 
@@ -149,3 +175,36 @@ If utility pages are crawled (for example menu/index aliases), either:
 - Add sitemap .gz and text sitemap support
 - Add report export path parameter
 - Add change-baseline comparison mode for CI
+
+## Python scanner/fixer for client repos
+
+The repository includes a safe Python scanner/fixer script:
+
+- repo_issue_scanner_fixer.py
+
+What it does:
+
+- Scans HTML files for missing canonical tags
+- Scans for non-absolute canonical URLs
+- Detects duplicate title clusters
+- Detects duplicate description clusters
+- Can apply safe canonical fixes (opt-in)
+
+Safety behavior:
+
+- Default is dry-run (no file writes)
+- Writes changes only when `--apply` is provided
+- Automatic fixes are intentionally limited to canonical tag issues
+- Ignores common generated/output folders by default (for example `reports`, `dist`, `build`, `node_modules`)
+
+Dry-run scan with JSON report:
+
+```powershell
+python .\repo_issue_scanner_fixer.py --repo . --base-url https://example.com --output-json .\reports\repo-issues.json
+```
+
+Apply safe canonical fixes:
+
+```powershell
+python .\repo_issue_scanner_fixer.py --repo . --base-url https://example.com --apply --output-json .\reports\repo-issues-after-fix.json
+```
