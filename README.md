@@ -71,6 +71,10 @@ The generated HTML report includes:
    - https://learn.cloudpartner.fi
    - https://intro.cloudpartner.fi
 
+Example screenshot:
+
+![SEO/GEO HTML report example](docs/images/seo-geo-audit-report-example.png)
+
 Rendered-vs-raw checks:
 
 ```powershell
