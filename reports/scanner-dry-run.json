@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "files_scanned": 62,
+    "html_files": 0,
+    "missing_canonical": 0,
+    "non_absolute_canonical": 0,
+    "duplicate_titles": 0,
+    "duplicate_descriptions": 0
+  },
+  "files": [],
+  "duplicate_title_clusters": [],
+  "duplicate_description_clusters": [],
+  "planned_fixes": []
+}
